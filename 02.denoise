@@ -1,0 +1,57 @@
+rule all:
+	input:
+		"02_repSeqs_mouse_fecal_samples.qzv",
+		"02_summarize_mouse_fecal_samples.qzv",
+		"02_stats_mouse_fecal_samples.qzv"
+
+rule denoise:
+	input:
+		"01_mouse_fecal_samples_demux.qza"
+	output:
+		rep_seqs="02_repSeqs_mouse_fecal_samples.qza",
+                stats="02_stats_mouse_fecal_samples.qza",
+                table="02_table_mouse_fecal_samples.qza"
+	shell:
+		"qiime dada2 denoise-paired \
+                --i-demultiplexed-seqs {input} \
+                --p-trim-left-f 0 \
+                --p-trim-left-r 0 \
+                --p-trunc-len-r 230 \
+                --p-trunc-len-f 220 \
+                --p-n-threads 6 \
+                --o-representative-sequences {output.rep_seqs} \
+                --o-denoising-stats {output.stats} \
+                --o-table {output.table}"
+
+rule tabulate:
+	input:
+		"02_stats_mouse_fecal_samples.qza"
+	output:
+		"02_stats_mouse_fecal_samples.qzv"
+	shell:
+		"qiime metadata tabulate \
+                --m-input-file {input}  \
+                --o-visualization {output}"
+
+rule feature_summarize:
+	input:
+		table="02_table_mouse_fecal_samples.qza",
+		metadata="metadata.txt"
+	output:
+		"02_summarize_mouse_fecal_samples.qzv"
+	shell:
+		"qiime feature-table summarize \
+                --i-table {input.table} \
+                --m-sample-metadata-file {input.metadata} \
+                --o-visualization {output}"
+
+rule tabulate_seqs:
+	input:
+		"02_repSeqs_mouse_fecal_samples.qza"
+	output:
+		"02_repSeqs_mouse_fecal_samples.qzv"
+	shell:
+		"qiime feature-table tabulate-seqs \
+                --i-data {input} \
+                --o-visualization {output}"
+
