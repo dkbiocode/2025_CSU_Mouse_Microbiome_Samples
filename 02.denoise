@@ -1,16 +1,22 @@
+configfile: "config.yaml"
+DATA_DIR = config["esdaile_data_dir"]
+WORK_DIR = config["scratch_data_dir"]
+
 rule all:
 	input:
-		"02_repSeqs_mouse_fecal_samples.qzv",
-		"02_summarize_mouse_fecal_samples.qzv",
-		"02_stats_mouse_fecal_samples.qzv"
+		f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qzv",
+		f"{WORK_DIR}/02_summarize_mouse_fecal_samples.qzv",
+		f"{WORK_DIR}/02_stats_mouse_fecal_samples.qzv"
 
 rule denoise:
 	input:
-		"01_mouse_fecal_samples_demux.qza"
+		f"{WORK_DIR}/01_mouse_fecal_samples_demux.qza"
 	output:
-		rep_seqs="02_repSeqs_mouse_fecal_samples.qza",
-                stats="02_stats_mouse_fecal_samples.qza",
-                table="02_table_mouse_fecal_samples.qza"
+		rep_seqs=f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qza",
+                stats=f"{WORK_DIR}/02_stats_mouse_fecal_samples.qza",
+                table=f"{WORK_DIR}/02_table_mouse_fecal_samples.qza"
+    threads:
+        workflow.cores  
 	shell:
 		"qiime dada2 denoise-paired \
                 --i-demultiplexed-seqs {input} \
@@ -18,16 +24,16 @@ rule denoise:
                 --p-trim-left-r 0 \
                 --p-trunc-len-r 230 \
                 --p-trunc-len-f 220 \
-                --p-n-threads 6 \
+                --p-n-threads {threads} \
                 --o-representative-sequences {output.rep_seqs} \
                 --o-denoising-stats {output.stats} \
                 --o-table {output.table}"
 
 rule tabulate:
 	input:
-		"02_stats_mouse_fecal_samples.qza"
+		f"{WORK_DIR}/02_stats_mouse_fecal_samples.qza"
 	output:
-		"02_stats_mouse_fecal_samples.qzv"
+		f"{WORK_DIR}/02_stats_mouse_fecal_samples.qzv"
 	shell:
 		"qiime metadata tabulate \
                 --m-input-file {input}  \
@@ -35,10 +41,10 @@ rule tabulate:
 
 rule feature_summarize:
 	input:
-		table="02_table_mouse_fecal_samples.qza",
-		metadata="metadata.txt"
+		table=f"{WORK_DIR}/02_table_mouse_fecal_samples.qza",
+		metadata=f"metadata.txt"
 	output:
-		"02_summarize_mouse_fecal_samples.qzv"
+		f"{WORK_DIR}/02_summarize_mouse_fecal_samples.qzv"
 	shell:
 		"qiime feature-table summarize \
                 --i-table {input.table} \
@@ -47,9 +53,9 @@ rule feature_summarize:
 
 rule tabulate_seqs:
 	input:
-		"02_repSeqs_mouse_fecal_samples.qza"
+		f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qza"
 	output:
-		"02_repSeqs_mouse_fecal_samples.qzv"
+		f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qzv"
 	shell:
 		"qiime feature-table tabulate-seqs \
                 --i-data {input} \

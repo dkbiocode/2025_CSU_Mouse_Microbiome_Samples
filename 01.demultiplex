@@ -1,18 +1,22 @@
+configfile: "config.yaml"
+DATA_DIR = config["esdaile_data_dir"]
+WORK_DIR = config["scratch_data_dir"]
+
 rule all:
 	input:
 		"01_mouse_fecal_samples_demux.qzv",
 		"01_demux_all_2025_16S_Data.qzv",
-		"/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/for_qiime/barcodes.fastq.gz"
+		f"{DATA_DIR}/2025_16S_Equine_Microbiome_Data/Multiplexed/for_qiime/barcodes.fastq.gz"
 
 rule rename_files:
 	input:
-		F="/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/Undetermined_S0_L001_R1_001.fastq.gz",
-		R="/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/Undetermined_S0_L001_R2_001.fastq.gz",
-		I="/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/Undetermined_S0_L001_I1_001.fastq.gz"
+		F=f"{DATA_DIR}/Multiplexed/Undetermined_S0_L001_R1_001.fastq.gz",
+		R=f"{DATA_DIR}/Multiplexed/Undetermined_S0_L001_R2_001.fastq.gz",
+		I=f"{DATA_DIR}/Multiplexed/Undetermined_S0_L001_I1_001.fastq.gz"
 	output:
-		F="/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/for_qiime/forward.fastq.gz",
-		R="/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/for_qiime/reverse.fastq.gz",
-		I="/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/for_qiime/barcodes.fastq.gz"
+		F=f"{DATA_DIR}/Multiplexed/for_qiime/forward.fastq.gz",
+		R=f"{DATA_DIR}/Multiplexed/for_qiime/reverse.fastq.gz",
+		I=f"{DATA_DIR}/Multiplexed/for_qiime/barcodes.fastq.gz"
 	run:
 		shell("cp {input.F} {output.F}")
 		shell("cp {input.R} {output.R}")
@@ -20,9 +24,9 @@ rule rename_files:
 
 rule import:
 	input:
-		"/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data/Multiplexed/for_qiime"
+		f"{DATA_DIR}/Multiplexed/for_qiime"
 	output:
-		"01_multiplexed_all_2025_16S_Data.qza"
+		f"{WORK_DIR}/01_multiplexed_all_2025_16S_Data.qza"
 	shell:
 		"qiime tools import \
 		--type EMPPairedEndSequences \
@@ -32,10 +36,10 @@ rule import:
 rule demux:
 	input:
 		barcodes="barcodes.txt",
-		seqs="01_multiplexed_all_2025_16S_Data.qza"
+		seqs=f"{WORK_DIR}/01_multiplexed_all_2025_16S_Data.qza"
 	output: 
-		out="01_demux_all_2025_16S_Data.qza",
-		error="01_demux_all_2025_16S_Data_error.qza"
+		out=f"{WORK_DIR}/01_demux_all_2025_16S_Data.qza",
+		error=f"{WORK_DIR}/01_demux_all_2025_16S_Data_error.qza"
 	shell:
 		"qiime demux emp-paired \
 		--m-barcodes-file {input.barcodes} \
@@ -48,9 +52,9 @@ rule demux:
 
 rule demux_summarize:
         input:
-                "01_demux_all_2025_16S_Data.qza"
+                f"{WORK_DIR}/01_demux_all_2025_16S_Data.qza"
         output:
-                "01_demux_all_2025_16S_Data.qzv"
+                f"{WORK_DIR}/01_demux_all_2025_16S_Data.qzv"
         shell:
                 "qiime demux summarize \
                 --i-data {input} \
@@ -59,10 +63,10 @@ rule demux_summarize:
 
 rule filter_samples:
 	input:
-		data="01_demux_all_2025_16S_Data.qza",
+		data=f"{WORK_DIR}/01_demux_all_2025_16S_Data.qza",
 		samples="samples.txt"
 	output:
-		"01_mouse_fecal_samples_demux.qza"
+		f"{WORK_DIR}/01_mouse_fecal_samples_demux.qza"
 	shell: 
 		"qiime demux filter-samples \
 		--i-demux {input.data} \
@@ -71,9 +75,9 @@ rule filter_samples:
 
 rule demux_summarize_filtered:
 	input:
-		"01_mouse_fecal_samples_demux.qza"
+		f"{WORK_DIR}/01_mouse_fecal_samples_demux.qza"
 	output:
-		"01_mouse_fecal_samples_demux.qzv"
+		f"{WORK_DIR}/01_mouse_fecal_samples_demux.qzv"
 	shell:
 		"qiime demux summarize \
 		--i-data {input} \
