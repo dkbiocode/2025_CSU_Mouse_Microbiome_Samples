@@ -13,9 +13,9 @@
 module load anaconda
 
 conda activate qiime2-amplicon-2024.10
-
+export TMPDIR=$SLURM_SCRATCH
 snakemake \
-        -c 4 \
+        -c $SLURM_NTASKS \
         -s 04.ancom \
         --verbose \
         --printshellcmds

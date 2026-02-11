@@ -7,6 +7,7 @@ rule all:
 		f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qzv",
 		f"{WORK_DIR}/02_summarize_mouse_fecal_samples.qzv",
 		f"{WORK_DIR}/02_stats_mouse_fecal_samples.qzv"
+		f"{WORK_DIR}/02_table_mouse_fecal_samples.qzv"
 
 rule denoise:
 	input:
@@ -15,8 +16,8 @@ rule denoise:
 		rep_seqs=f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qza",
                 stats=f"{WORK_DIR}/02_stats_mouse_fecal_samples.qza",
                 table=f"{WORK_DIR}/02_table_mouse_fecal_samples.qza"
-    threads:
-        workflow.cores  
+	threads:
+		workflow.cores  
 	shell:
 		"qiime dada2 denoise-paired \
                 --i-demultiplexed-seqs {input} \

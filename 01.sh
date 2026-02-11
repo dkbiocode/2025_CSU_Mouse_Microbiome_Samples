@@ -10,7 +10,7 @@ module purge
 module load miniforge
 
 conda activate qiime2-amplicon-2024.10
-
+export TMPDIR=$SLURM_SCRATCH
 snakemake \
         -c $SLURM_NTASKS \
         -s 01.demultiplex \
