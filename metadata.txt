@@ -1,4 +1,4 @@
-sample-id	treatment-group	pregnancy-status	pregnancy-day	Fenbendazole
+sample_id	treatment-group	pregnancy-status	pregnancy-day	Fenbendazole
 NC1	Normal Chow	No	NP	No
 NC5	Normal Chow	No	NP	No
 NC8	Normal Chow	No	NP	No
@@ -12,55 +12,55 @@ NC19	Normal Chow	Yes	e7.5	No
 NC21	Normal Chow	Yes	e7.5	No
 NC26	Normal Chow	Yes	e7.5	No
 NC27	Normal Chow	Yes	e7.5	No
-NC2-A	Normal Chow	Yes	e12.5	No
-NC2-B	Normal Chow	Yes	e12.5	No
-NC3-A	Normal Chow	Yes	e12.5	No
-NC3-B	Normal Chow	Yes	e12.5	No
-NC6-A	Normal Chow	Yes	e12.5	No
-NC6-B	Normal Chow	Yes	e12.5	No
-NC4-A	Normal Chow	Yes	e18.5	No
-NC4-B	Normal Chow	Yes	e18.5	No
-NC7-A	Normal Chow	Yes	e18.5	No
-NC7-B	Normal Chow	Yes	e18.5	No
-NC11-A	Normal Chow	Yes	e18.5	No
-NC11-B	Normal Chow	Yes	e18.5	No
+NC2_A	Normal Chow	Yes	e12.5	No
+NC2_B	Normal Chow	Yes	e12.5	No
+NC3_A	Normal Chow	Yes	e12.5	No
+NC3_B	Normal Chow	Yes	e12.5	No
+NC6_A	Normal Chow	Yes	e12.5	No
+NC6_B	Normal Chow	Yes	e12.5	No
+NC4_A	Normal Chow	Yes	e18.5	No
+NC4_B	Normal Chow	Yes	e18.5	No
+NC7_A	Normal Chow	Yes	e18.5	No
+NC7_B	Normal Chow	Yes	e18.5	No
+NC11_A	Normal Chow	Yes	e18.5	No
+NC11_B	Normal Chow	Yes	e18.5	No
 FBZ10	Fenbendazole	Yes	e12.5	Yes
 FBZ21	Fenbendazole	Yes	e7.5	Yes
 FBZ37	Fenbendazole	No	NP	Yes
 FBZ47	Fenbendazole	No	NP	Yes
 FBZ56	Fenbendazole	Yes	e18.5	Yes
-FBZ41-A	Fenbendazole	Yes	e7.5	Yes
-FBZ41-B	Fenbendazole	Yes	e7.5	Yes
-FBZ53-A	Fenbendazole	Yes	e7.5	Yes
-FBZ53-B	Fenbendazole	Yes	e7.5	Yes
-FBZ54-A	Fenbendazole	Yes	e7.5	Yes
-FBZ54-B	Fenbendazole	Yes	e7.5	Yes
-FBZ55-A	Fenbendazole	Yes	e7.5	Yes
-FBZ55-B	Fenbendazole	Yes	e7.5	Yes
-FBZ48-A	Fenbendazole	Yes	e7.5	Yes
-FBZ48-B	Fenbendazole	Yes	e7.5	Yes
-FBZ65-A	Fenbendazole	Yes	e7.5	Yes
-FBZ65-B	Fenbendazole	Yes	e7.5	Yes
-FBZ69-A	Fenbendazole	Yes	e7.5	Yes
-FBZ69-B	Fenbendazole	Yes	e7.5	Yes
+FBZ41_A	Fenbendazole	Yes	e7.5	Yes
+FBZ41_B	Fenbendazole	Yes	e7.5	Yes
+FBZ53_A	Fenbendazole	Yes	e7.5	Yes
+FBZ53_B	Fenbendazole	Yes	e7.5	Yes
+FBZ54_A	Fenbendazole	Yes	e7.5	Yes
+FBZ54_B	Fenbendazole	Yes	e7.5	Yes
+FBZ55_A	Fenbendazole	Yes	e7.5	Yes
+FBZ55_B	Fenbendazole	Yes	e7.5	Yes
+FBZ48_A	Fenbendazole	Yes	e7.5	Yes
+FBZ48_B	Fenbendazole	Yes	e7.5	Yes
+FBZ65_A	Fenbendazole	Yes	e7.5	Yes
+FBZ65_B	Fenbendazole	Yes	e7.5	Yes
+FBZ69_A	Fenbendazole	Yes	e7.5	Yes
+FBZ69_B	Fenbendazole	Yes	e7.5	Yes
 FBZ2	Fenbendazole	Yes	e7.5	Yes
 FBZ9	Fenbendazole	Yes	e7.5	Yes
 FBZ18	Fenbendazole	Yes	e7.5	Yes
 FBZ20	Fenbendazole	Yes	e7.5	Yes
 FBZ23	Fenbendazole	Yes	e7.5	Yes
 FBZ28	Fenbendazole	Yes	e7.5	Yes
-FBZ42-A	Fenbendazole	Yes	e12.5	Yes
-FBZ42-B	Fenbendazole	Yes	e12.5	Yes
-FBZ43-A	Fenbendazole	Yes	e12.5	Yes
-FBZ43-B	Fenbendazole	Yes	e12.5	Yes
-FBZ49-A	Fenbendazole	Yes	e12.5	Yes
-FBZ49-B	Fenbendazole	Yes	e12.5	Yes
-FBZ64-A	Fenbendazole	Yes	e12.5	Yes
-FBZ64-B	Fenbendazole	Yes	e12.5	Yes
-FBZ75-A	Fenbendazole	Yes	e7.5	Yes
-FBZ75-B	Fenbendazole	Yes	e7.5	Yes
-FBZ68-A	Fenbendazole	Yes	e18.5	Yes
-FBZ68-B	Fenbendazole	Yes	e18.5	Yes
+FBZ42_A	Fenbendazole	Yes	e12.5	Yes
+FBZ42_B	Fenbendazole	Yes	e12.5	Yes
+FBZ43_A	Fenbendazole	Yes	e12.5	Yes
+FBZ43_B	Fenbendazole	Yes	e12.5	Yes
+FBZ49_A	Fenbendazole	Yes	e12.5	Yes
+FBZ49_B	Fenbendazole	Yes	e12.5	Yes
+FBZ64_A	Fenbendazole	Yes	e12.5	Yes
+FBZ64_B	Fenbendazole	Yes	e12.5	Yes
+FBZ75_A	Fenbendazole	Yes	e7.5	Yes
+FBZ75_B	Fenbendazole	Yes	e7.5	Yes
+FBZ68_A	Fenbendazole	Yes	e18.5	Yes
+FBZ68_B	Fenbendazole	Yes	e18.5	Yes
 FBZ3	Fenbendazole	Yes	e12.5	Yes
 FBZ5	Fenbendazole	Yes	e12.5	Yes
 FBZ6	Fenbendazole	Yes	e12.5	Yes
@@ -68,16 +68,16 @@ FBZ11	Fenbendazole	Yes	e12.5	Yes
 FBZ12	Fenbendazole	Yes	e12.5	Yes
 FBZ15	Fenbendazole	Yes	e12.5	Yes
 FBZ19	Fenbendazole	Yes	e12.5	Yes
-FBZ57-A	Fenbendazole	Yes	e18.5	Yes
-FBZ57-B	Fenbendazole	Yes	e18.5	Yes
-FBZ72-A	Fenbendazole	Yes	e18.5	Yes
-FBZ72-B	Fenbendazole	Yes	e18.5	Yes
-FBZ63-A	Fenbendazole	Yes	e18.5	Yes
-FBZ63-B	Fenbendazole	Yes	e18.5	Yes
-FBZ71-A	Fenbendazole	Yes	e18.5	Yes
-FBZ71-B	Fenbendazole	Yes	e18.5	Yes
-FBZ78-A	Fenbendazole	Yes	e18.5	Yes
-FBZ78-B	Fenbendazole	Yes	e18.5	Yes
+FBZ57_A	Fenbendazole	Yes	e18.5	Yes
+FBZ57_B	Fenbendazole	Yes	e18.5	Yes
+FBZ72_A	Fenbendazole	Yes	e18.5	Yes
+FBZ72_B	Fenbendazole	Yes	e18.5	Yes
+FBZ63_A	Fenbendazole	Yes	e18.5	Yes
+FBZ63_B	Fenbendazole	Yes	e18.5	Yes
+FBZ71_A	Fenbendazole	Yes	e18.5	Yes
+FBZ71_B	Fenbendazole	Yes	e18.5	Yes
+FBZ78_A	Fenbendazole	Yes	e18.5	Yes
+FBZ78_B	Fenbendazole	Yes	e18.5	Yes
 FBZ1	Fenbendazole	Yes	e18.5	Yes
 FBZ4	Fenbendazole	Yes	e18.5	Yes
 FBZ8	Fenbendazole	Yes	e18.5	Yes
@@ -93,4 +93,4 @@ FBZ36	Fenbendazole	Yes	e18.5	Yes
 FBZ39	Fenbendazole	Yes	e18.5	Yes
 FBZ40	Fenbendazole	Yes	e18.5	Yes
 KIT1	Fenbendazole	No	NP	No
-NTC-libprep2	Fenbendazole	No	NP	No
+NTC_libprep2	Fenbendazole	No	NP	No
