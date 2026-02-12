@@ -12,20 +12,23 @@ rule all:
 		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_barplot_samples_3_reads_100_greengenes.qzv",
 		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_50_greengenes.qzv",
 		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_100_greengenes.qzv",
-		directory(WORK_DIR + "03_mouse_fecal_samples_beta_div_samples_3_reads_50_greengenes"),
-		directory(WORK_DIR + "03_mouse_fecal_samples_beta_div_samples_3_reads_100_greengenes")
+		directory(WORK_DIR + "/03_mouse_fecal_samples_beta_div_samples_3_reads_50_greengenes"),
+		directory(WORK_DIR + "/03_mouse_fecal_samples_beta_div_samples_3_reads_100_greengenes")
 
 
 rule classify_features:
 	input:
-		refseqs="02_repSeqs_mouse_fecal_samples.qza",
+		refseqs=f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qza",
 		backbone=f"{BACKBONE}"
 	output:
 		f"{WORK_DIR}/03_mouse_fecal_samples_taxonomy_greengenes.qza"
+	threads:
+		workflow.cores
 	shell:
 		"qiime feature-classifier classify-sklearn \
 		--i-reads {input.refseqs} \
 		--i-classifier {input.backbone} \
+		--p-n-jobs {threads} \
 		--o-classification {output}"
 
 rule visualize_features:
@@ -103,7 +106,7 @@ rule visualize_filtered:
 
 rule taxonomy_barplot:
 	input:
-		table=f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		table=WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
 		taxa=f"{WORK_DIR}/03_mouse_fecal_samples_taxonomy_greengenes.qza",
 		meta="metadata.txt"
 	output:
@@ -136,10 +139,10 @@ rule make_tree:
 
 rule rarefaction:
 	input:
-		filt=f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		filt=WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
 		meta="metadata.txt"
 	output:
-		f"{WORK_DIR}/03_mouse_fecal_sampless_alpha_rarefaction_curves_{filter}_greengenes.qzv"
+		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_{filter}_greengenes.qzv"
 	shell:
 		"qiime diversity alpha-rarefaction \
 		--i-table {input.filt} \
@@ -155,11 +158,14 @@ rule diversity:
 		meta="metadata.txt"
 	output:
 		directory(WORK_DIR + "/03_mouse_fecal_samples_beta_div_{filter}_greengenes")
+	threads:
+		workflow.cores  
 	shell:
 		"qiime diversity core-metrics-phylogenetic \
 		--i-table {input.table} \
 		--i-phylogeny {input.tree} \
 		--m-metadata-file {input.meta} \
 		--p-sampling-depth 1300 \
+		--p-n-jobs-or-threads {threads} \
 		--output-dir {output}"
 
