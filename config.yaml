@@ -1,4 +1,5 @@
 esdaile_data_dir: "/projects/c829993361@colostate.edu/2025_16S_Equine_Microbiome_Data"
 esdaile_microbiome_taxonomy: "/projects/c829993361@colostate.edu/microbiome_taxonomy"
 esdaile_greengenes_rel: "greengenes_2022.10/ftp.microbio.me/greengenes_release/current/2024.09.backbone.v4.nb.qza"
+esdaile_sepp_rel: "greengenes_2022.10/ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.sepp-reference.qza"
 scratch_data_dir: "/scratch/alpine/dcking@colostate.edu/esdaile_project"

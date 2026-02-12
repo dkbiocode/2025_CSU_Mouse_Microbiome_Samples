@@ -1,14 +1,18 @@
+configfile: "config.yaml"
+DATA_DIR = config["esdaile_data_dir"]
+WORK_DIR = config["scratch_data_dir"]
+
 rule all:
 	input:
-		"04_ancombc_number_of_paths.qzv",
-		"04_da_barplot_number_of_paths.qzv"
+		WORK_DIR + "/04_ancombc_number_of_paths.qzv",
+		WORK_DIR + "/04_da_barplot_number_of_paths.qzv"
 
 rule collapse_to_species: 
 	input:
-		table="03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_100_greengenes.qza",
-		taxon="03_mouse_fecal_samples_taxonomy_greengenes.qza"
+		table=f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_100_greengenes.qza",
+		taxon=f"{WORK_DIR}/03_mouse_fecal_samples_taxonomy_greengenes.qza"
 	output:
-		"04_table_collapsed_L7.qza"
+		f"{WORK_DIR}/04_table_collapsed_L7.qza"
 	shell:
 		"qiime taxa collapse \
 		--i-table {input.table} \
@@ -19,10 +23,10 @@ rule collapse_to_species:
 
 rule run_ancom:
 	input:
-		table="04_table_collapsed_L7.qza",
+		table=f"{WORK_DIR}/04_table_collapsed_L7.qza",
 		meta="metadata.txt"
 	output:
-		"04_ancombc_number_of_paths.qza"
+		f"{WORK_DIR}/04_ancombc_number_of_paths.qza"
 	shell:
 		"""qiime composition ancombc \
 		--i-table {input.table} \
@@ -33,9 +37,9 @@ rule run_ancom:
 
 rule vis_ancom:
 	input: 
-		"04_ancombc_number_of_paths.qza"
+		f"{WORK_DIR}/04_ancombc_number_of_paths.qza"
 	output:
-		"04_ancombc_number_of_paths.qzv"
+		f"{WORK_DIR}/04_ancombc_number_of_paths.qzv"
 	shell: 
 		"qiime composition tabulate \
 		--i-data {input} \
@@ -43,9 +47,9 @@ rule vis_ancom:
 
 rule ancom_barplot:
 	input:
-		"04_ancombc_number_of_paths.qza"
+		f"{WORK_DIR}/04_ancombc_number_of_paths.qza"
 	output:
-		"04_da_barplot_number_of_paths.qzv"
+		f"{WORK_DIR}/04_da_barplot_number_of_paths.qzv"
 	shell:
 		"""qiime composition da-barplot \
 		--i-data {input} \
