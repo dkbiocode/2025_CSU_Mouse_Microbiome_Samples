@@ -1,4 +1,4 @@
-sample-id	treatment-group	pregnancy-status	pregnancy-day	Fenbendazole
+sample-id	treatment-group	pregnancy_status	pregnancy-day	Fenbendazole
 NC1	Normal Chow	No	NP	No
 NC5	Normal Chow	No	NP	No
 NC8	Normal Chow	No	NP	No

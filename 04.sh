@@ -4,10 +4,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=4
 #SBATCH --partition=amilan
-#SBATCH --time=24:00:00
+#SBATCH --time=2:00:00
 #SBATCH --qos=normal
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=e.s.esdaile@colostate.edu
 #SBATCH --output=04.ancom_%j.out
 
 module load anaconda

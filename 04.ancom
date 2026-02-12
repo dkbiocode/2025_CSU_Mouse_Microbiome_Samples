@@ -31,7 +31,7 @@ rule run_ancom:
 		"""qiime composition ancombc \
 		--i-table {input.table} \
 		--m-metadata-file {input.meta} \
-		--p-formula 'pregnancystatus' \
+		--p-formula 'pregnancy_status' \
 		--p-p-adj-method 'bonferroni' \
 		--o-differentials {output}"""
 
