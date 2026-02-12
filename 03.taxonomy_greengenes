@@ -1,23 +1,27 @@
+configfile: "config.yaml"
+DATA_DIR = config["esdaile_data_dir"]
+WORK_DIR = config["scratch_data_dir"]
+BACKBONE = config["esdaile_microbiome_taxonomy"] + "/" + config["esdaile_greengenes_rel"]
+
 rule all:
 	input:
-		"03_mouse_fecal_samples_taxonomy_greengenes.qzv",
-		"03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_50_greengenes.qzv",
-		"03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_100_greengenes.qzv",
-		"03_mouse_fecal_samples_taxonomy_greengenes.qzv",
-		"03_mouse_fecal_samples_taxonomy_barplot_samples_3_reads_50_greengenes.qzv",
-		"03_mouse_fecal_samples_taxonomy_barplot_samples_3_reads_100_greengenes.qzv",
-		"03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_50_greengenes.qzv",
-		"03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_100_greengenes.qzv",
-		directory("03_mouse_fecal_samples_beta_div_samples_3_reads_50_greengenes"),
-		directory("03_mouse_fecal_samples_beta_div_samples_3_reads_100_greengenes")
+		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_greengenes.qzv",
+		WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_50_greengenes.qzv",
+		WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_100_greengenes.qzv",
+		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_barplot_samples_3_reads_50_greengenes.qzv",
+		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_barplot_samples_3_reads_100_greengenes.qzv",
+		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_50_greengenes.qzv",
+		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_100_greengenes.qzv",
+		directory(WORK_DIR + "03_mouse_fecal_samples_beta_div_samples_3_reads_50_greengenes"),
+		directory(WORK_DIR + "03_mouse_fecal_samples_beta_div_samples_3_reads_100_greengenes")
 
 
 rule classify_features:
 	input:
 		refseqs="02_repSeqs_mouse_fecal_samples.qza",
-		backbone="/projects/c829993361@colostate.edu/microbiome_taxonomy/greengenes_2022.10/ftp.microbio.me/greengenes_release/current/2024.09.backbone.v4.nb.qza"
+		backbone=f"{BACKBONE}"
 	output:
-		"03_mouse_fecal_samples_taxonomy_greengenes.qza"
+		f"{WORK_DIR}/03_mouse_fecal_samples_taxonomy_greengenes.qza"
 	shell:
 		"qiime feature-classifier classify-sklearn \
 		--i-reads {input.refseqs} \
@@ -26,9 +30,9 @@ rule classify_features:
 
 rule visualize_features:
 	input:
-		"03_mouse_fecal_samples_taxonomy_greengenes.qza"
+		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_greengenes.qza"
 	output:
-		"03_mouse_fecal_samples_taxonomy_greengenes.qzv"
+		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_greengenes.qzv"
 	shell:
 		"qiime metadata tabulate \
 		 --m-input-file {input} \
@@ -37,10 +41,10 @@ rule visualize_features:
 
 rule filter_mito_chloro:
 	input:
-		table="02_table_mouse_fecal_samples.qza",
-		taxonomy="03_mouse_fecal_samples_taxonomy_greengenes.qza"
+		table=f"{WORK_DIR}/02_table_mouse_fecal_samples.qza",
+		taxonomy=f"{WORK_DIR}/03_mouse_fecal_samples_taxonomy_greengenes.qza"
 	output:
-		"03_table_mouse_fecal_samples_filter_taxa_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_greengenes.qza"
 	shell:
 		"qiime taxa filter-table \
 		--i-table {input.table} \
@@ -50,9 +54,9 @@ rule filter_mito_chloro:
 
 rule filter_samples_read_number:
 	input:
-		"03_table_mouse_fecal_samples_filter_taxa_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_greengenes.qza"
 	output:
-		"03_table_mouse_fecal_samples_filter_taxa_samples_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_samples_greengenes.qza"
 	shell:
 		"qiime feature-table filter-samples \
 		 --i-table {input} \
@@ -62,9 +66,9 @@ rule filter_samples_read_number:
 
 rule filter_sequences_read_number_3_100:
 	input:
-		"03_table_mouse_fecal_samples_filter_taxa_samples_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_samples_greengenes.qza"
 	output:
-		"03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_100_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_100_greengenes.qza"
 	shell:
 		"qiime feature-table filter-features \
 		--i-table {input} \
@@ -75,9 +79,9 @@ rule filter_sequences_read_number_3_100:
 
 rule filter_sequences_read_number_3_50:
 	input:
-		"03_table_mouse_fecal_samples_filter_taxa_samples_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_samples_greengenes.qza"
 	output:
-		"03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_50_greengenes.qza"
+		f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_samples_3_reads_50_greengenes.qza"
 	shell:
 		"qiime feature-table filter-features \
 		--i-table {input} \
@@ -87,10 +91,10 @@ rule filter_sequences_read_number_3_50:
 
 rule visualize_filtered:
 	input:
-		filt="03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		filt=WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
 		meta="metadata.txt"
 	output:
-		"03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qzv"
+		WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qzv"
 	shell:
 		"qiime feature-table summarize \
 		--i-table {input.filt} \
@@ -99,11 +103,11 @@ rule visualize_filtered:
 
 rule taxonomy_barplot:
 	input:
-		table="03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
-		taxa="03_mouse_fecal_samples_taxonomy_greengenes.qza",
+		table=f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		taxa=f"{WORK_DIR}/03_mouse_fecal_samples_taxonomy_greengenes.qza",
 		meta="metadata.txt"
 	output:
-		"03_mouse_fecal_samples_taxonomy_barplot_{filter}_greengenes.qzv"
+		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_barplot_{filter}_greengenes.qzv"
 	shell:
 		"qiime taxa barplot \
 		--i-table {input.table} \
@@ -114,26 +118,28 @@ rule taxonomy_barplot:
 
 rule make_tree:
 	input:
-		repseqs="02_repSeqs_mouse_fecal_samples.qza",
-		backbone="/projects/c829993361@colostate.edu/microbiome_taxonomy/greengenes_2022.10/ftp.microbio.me/greengenes_release/2022.10-rc1/2022.10.backbone.sepp-reference.qza"
+		repseqs=f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qza",
+		backbone=BACKBONE
 	output:
-		tree="03_mouse_fecal_samples_tree_greengenes.qza",
-		placements="03_mouse_fecal_samples_tree_placements_greengenes.qza"
+		tree=WORK_DIR + "/03_mouse_fecal_samples_tree_greengenes.qza",
+		placements=f"{WORK_DIR}/03_mouse_fecal_samples_tree_placements_greengenes.qza"
+	threads:
+		workflow.cores  
 	shell:
 		"qiime fragment-insertion sepp \
 		--i-representative-sequences {input.repseqs} \
 		--i-reference-database {input.backbone} \
-		--p-threads 12 \
+		--p-threads {threads} \
 		--o-tree {output.tree} \
 		--o-placements {output.placements}"
 
 
 rule rarefaction:
 	input:
-		filt="03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		filt=f"{WORK_DIR}/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
 		meta="metadata.txt"
 	output:
-		"03_mouse_fecal_sampless_alpha_rarefaction_curves_{filter}_greengenes.qzv"
+		f"{WORK_DIR}/03_mouse_fecal_sampless_alpha_rarefaction_curves_{filter}_greengenes.qzv"
 	shell:
 		"qiime diversity alpha-rarefaction \
 		--i-table {input.filt} \
@@ -144,11 +150,11 @@ rule rarefaction:
 
 rule diversity:
 	input:
-		table="03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
-		tree="03_mouse_fecal_samples_tree_greengenes.qza",
+		table=WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		tree=WORK_DIR + "/03_mouse_fecal_samples_tree_greengenes.qza",
 		meta="metadata.txt"
 	output:
-		directory("03_mouse_fecal_samples_beta_div_{filter}_greengenes")
+		directory(WORK_DIR + "/03_mouse_fecal_samples_beta_div_{filter}_greengenes")
 	shell:
 		"qiime diversity core-metrics-phylogenetic \
 		--i-table {input.table} \

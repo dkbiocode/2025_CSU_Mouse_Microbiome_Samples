@@ -7,7 +7,6 @@ rule all:
 		f"{WORK_DIR}/02_repSeqs_mouse_fecal_samples.qzv",
 		f"{WORK_DIR}/02_summarize_mouse_fecal_samples.qzv",
 		f"{WORK_DIR}/02_stats_mouse_fecal_samples.qzv"
-		f"{WORK_DIR}/02_table_mouse_fecal_samples.qzv"
 
 rule denoise:
 	input:
