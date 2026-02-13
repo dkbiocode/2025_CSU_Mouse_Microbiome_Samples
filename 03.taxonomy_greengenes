@@ -141,12 +141,14 @@ rule make_tree:
 rule rarefaction:
 	input:
 		filt=WORK_DIR + "/03_table_mouse_fecal_samples_filter_taxa_{filter}_greengenes.qza",
+		tree=WORK_DIR + "/03_mouse_fecal_samples_tree_greengenes.qza",
 		meta="metadata.txt"
 	output:
 		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_{filter}_greengenes.qzv"
 	shell:
 		"qiime diversity alpha-rarefaction \
 		--i-table {input.filt} \
+		--i-phylogeny {input.tree} \
 		--m-metadata-file {input.meta} \
 		--o-visualization {output} \
 		--p-min-depth 10 \
