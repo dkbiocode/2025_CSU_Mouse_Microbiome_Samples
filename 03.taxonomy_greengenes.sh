@@ -8,7 +8,7 @@
 #SBATCH --qos=normal
 #SBATCH --output=%x_%j.out
 
-module load anaconda
+module load miniforge
 
 conda activate qiime2-amplicon-2024.10
 
@@ -18,5 +18,8 @@ snakemake \
         -c $SLURM_NTASKS \
         -s 03.taxonomy_greengenes \
         --verbose \
-        --printshellcmds
+        --printshellcmds \
+        --forcerun rarefaction \
+        "/scratch/alpine/dcking@colostate.edu/esdaile_project/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_50_greengenes.qzv" \
+        "/scratch/alpine/dcking@colostate.edu/esdaile_project/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_100_greengenes.qzv"
 

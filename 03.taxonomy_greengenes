@@ -149,7 +149,7 @@ rule rarefaction:
 		--m-metadata-file {input.meta} \
 		--o-visualization {output} \
 		--p-min-depth 10 \
-		--p-max-depth 6000"
+		--p-max-depth 40000"
 
 rule diversity:
 	input:
