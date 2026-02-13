@@ -13,9 +13,6 @@ rule all:
 		WORK_DIR + "/03_mouse_fecal_samples_taxonomy_barplot_samples_3_reads_100_greengenes.qzv",
 		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_50_greengenes.qzv",
 		WORK_DIR + "/03_mouse_fecal_sampless_alpha_rarefaction_curves_samples_3_reads_100_greengenes.qzv",
-		directory(WORK_DIR + "/03_mouse_fecal_samples_beta_div_samples_3_reads_50_greengenes"),
-		directory(WORK_DIR + "/03_mouse_fecal_samples_beta_div_samples_3_reads_100_greengenes")
-
 
 rule classify_features:
 	input:
